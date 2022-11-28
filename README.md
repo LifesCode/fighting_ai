@@ -1,1 +1,1 @@
-"# stick_man_ai" 
+Fighting Game where the players are controlled by AI
