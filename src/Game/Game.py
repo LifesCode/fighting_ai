@@ -15,6 +15,7 @@ class Game:
         self.game_loop()
 
     def draw_background(self):
+        self.screen.fill((255, 255, 255))
         pygame.draw.line(self.screen, (0, 255, 255), (0, 480), (1080, 480))
 
     def draw_hud(self):
