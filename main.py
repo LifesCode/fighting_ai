@@ -14,8 +14,8 @@ pygame.display.set_caption("Stick-Man A.I.")
 
 
 def main():
-    partita = Game(SCREEN, CLOCK, [AIRaffaele, AIRoberto])
-    partita.start()
+    game = Game(SCREEN, CLOCK, [AIRaffaele, AIRoberto])
+    game.start()
 
 
 if __name__ == "__main__":
