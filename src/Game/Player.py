@@ -1,4 +1,3 @@
-from src.Game.HUD import HUD
 from src.Game.Animations import player_animations
 from src.Game.Effects import FireEffect
 
@@ -10,7 +9,6 @@ class Player:
 
     def __init__(self, ai, num):
         self.AI = ai
-        self.HUD = HUD(num)
         self.frame = 0
         self.state = "run"
         self.x = 500
@@ -28,6 +26,5 @@ class Player:
 
     def draw(self, screen):
         self.update()
-        self.HUD.draw(screen)
         screen.blit(self.animations[self.state][self.frame], (self.x, self.y))
         self.effect.draw(screen, [self.x+140, self.y])
