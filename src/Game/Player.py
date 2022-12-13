@@ -34,7 +34,8 @@ class Player:
 
 
 class Car:
-    original_image = pygame.image.load("assets/players/cars/car.png").convert_alpha()
+    original_image = pygame.image.load("assets/players/cars/car_1.png").convert_alpha()
+    # original_image = pygame.transform.scale(original_image, (26, 41))
 
     def __init__(self, x, y, angle=0.0, max_acceleration=5.0):
         self.x = 200
@@ -43,10 +44,10 @@ class Car:
 
         self.angle = 0
         self.linear_speed = 0  # a speed in pixels per second
-        self.angular_speed = 10  # 0.0872638  # a speed in radians equivalent to 15 degrees/second
+        self.angular_speed = 6  # 0.0872638  # a speed in radians equivalent to 15 degrees/second
         self.steering_direction = 0
 
-        self.max_l_speed = 1000  # max speed a car can move
+        self.max_l_speed = 700  # max speed a car can move
         self.keep_steering = False  # current steering state
         self.keep_speeding = False  # keep speeding up status
         self.size = (self.original_image.get_size()[0], self.original_image.get_size()[1])
@@ -82,7 +83,6 @@ class Car:
         self.brake = state
 
     def update(self, dt):
-        self.inertia_direction = -self.linear_speed/self.linear_speed if self.linear_speed else 0
         self.steer(dt)
         self.speed_up(dt)
         self.x += self.linear_speed*sin(self.angle)*dt
@@ -108,7 +108,7 @@ class Car:
 
 
 class Bullet:
-    def __init__(self, center, angle, size=5, speed=1000):
+    def __init__(self, center, angle, size=3, speed=3000):
         self.center = list(center)
         self.size = size
         self.speed_x = speed*sin(angle)
@@ -119,11 +119,11 @@ class Bullet:
         self.center[1] += self.speed_y*dt
 
     def draw(self):
-        pygame.draw.circle(SCREEN, (0, 0, 0), self.center, self.size, 5)
+        pygame.draw.circle(SCREEN, (255, 255, 0), self.center, self.size)
 
 
 class BaseGun:
-    def __init__(self, center, size=50, angle=0):
+    def __init__(self, center, size=10, angle=0):
         self.center = center
         self.size = size
         self.angle = None
@@ -140,8 +140,8 @@ class BaseGun:
         [bullet.update(dt) for bullet in self.bullets]
 
     def draw(self):
-        pygame.draw.line(SCREEN, (0, 0, 0), self.center, (self.x_end, self.y_end), 6)
-        [bullet.draw(SCREEN) for bullet in self.bullets]
+        pygame.draw.line(SCREEN, (0, 0, 0), self.center, (self.x_end, self.y_end), 2)
+        [bullet.draw() for bullet in self.bullets]
 
 
 class CarPlayer(Player):

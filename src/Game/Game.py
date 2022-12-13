@@ -30,14 +30,11 @@ class Game:
                 self.player_1.car.activate_speeding(1)
             elif event.key == pygame.K_DOWN:
                 self.player_1.car.activate_speeding(-1)
-            
-            if event.key == pygame.K_b:
+            elif event.key == pygame.K_b:
                 self.player_1.shoot()
-
-            if event.key == pygame.K_SPACE:
+            elif event.key == pygame.K_SPACE:
                 self.player_1.car.activate_brakes()
-
-            if event.key == pygame.K_RIGHT:
+            elif event.key == pygame.K_RIGHT:
                 self.player_1.car.activate_steering(-1, True)
             elif event.key == pygame.K_LEFT:
                 self.player_1.car.activate_steering(1, True)
@@ -45,9 +42,9 @@ class Game:
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
                 self.player_1.car.activate_speeding(0, False)
-            if event.key == pygame.K_SPACE:
+            elif event.key == pygame.K_SPACE:
                 self.player_1.car.activate_brakes(0)
-            if event.key == pygame.K_RIGHT or event.key == pygame.K_LEFT:
+            elif event.key == pygame.K_RIGHT or event.key == pygame.K_LEFT:
                 self.player_1.car.activate_steering(0, False)
 
     def refresh(self):
@@ -63,8 +60,7 @@ class Game:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     exit()
-        
-            self.input(event)
+                self.input(event)
 
             self.player_1.update(self.dt)
             self.refresh()
