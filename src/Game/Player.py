@@ -1,4 +1,3 @@
-from src.Game.HUD import HUD
 from src.Game.Animations import player_animations
 from src.Game.Effects import FireEffect
 from math import cos, sin, pi
@@ -12,7 +11,6 @@ class Player:
 
     def __init__(self, ai, num):
         self.AI = ai
-        self.HUD = HUD(num)
         self.frame = 0
         self.state = "run"
         self.x = 500
