@@ -1,19 +1,19 @@
 import random
 from src.Game.HUD.HUD import HUD
 from src.Game.Player import CarPlayer
+from src.Game.player_1 import Player
 from src.Game.environment.environment import Environment
 from src.config.globals import SCREEN, CLOCK, MAP_SURFACE, MAP_SURFACE_POS
 import pygame
 
 
 class Game:
-    def __init__(self, AIs):
-
-        rand = random.choice([1, 0])   # alternate between player 1 and 2
+    def __init__(self, AIs): 
         self.hud_1 = HUD("Player 2")
         self.hud_2 = HUD("Player 1")
+        self.player = Player()
         self.envirnment = Environment()
-        self.player_1 = CarPlayer(AIs[0], rand)
+        # self.player_1 = CarPlayer(AIs[0], rand)
         # self.player_2 = Player(AIs[1], 1-rand)
         self.dt = 0
 
@@ -23,7 +23,7 @@ class Game:
     def draw_background(self):
         SCREEN.fill((25, 25, 25))
         SCREEN.blit(MAP_SURFACE, (MAP_SURFACE_POS))
-        MAP_SURFACE.fill((0, 0, 0))
+        MAP_SURFACE.fill((100, 100, 100))
 
     def draw_hud(self):
         pass
@@ -53,7 +53,8 @@ class Game:
 
     def refresh(self):
         self.draw_background()
-        self.player_1.draw()
+        # self.player_1.draw()
+        self.player.draw()
         self.hud_1.draw()
         self.hud_2.draw()
         self.envirnment.draw()
@@ -65,8 +66,9 @@ class Game:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     exit()
-                self.input(event)
+                # self.input(event)
+                self.player.controller_player_moves(event=event)
 
-            self.player_1.update(self.dt)
+            # self.player_1.update(self.dt)
             self.refresh()
             self.dt = CLOCK.tick()/1000
