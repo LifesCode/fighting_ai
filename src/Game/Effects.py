@@ -9,7 +9,7 @@ class Particle:
         self.radius = choice(range(0, 14, 2))
         self.color = choice([(255, 0, 0), (255, 255, 0), (220, 100, 0)])
         self.radius = choice([10, 8, 6, 4, 2])
-        self.width = randrange(3)
+        self.width = randrange(1, 3)
 
     @staticmethod
     def calculate_position(position, existence_radius):
