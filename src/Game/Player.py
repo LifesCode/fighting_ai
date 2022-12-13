@@ -1,5 +1,6 @@
 from src.Game.Animations import player_animations
 from src.Game.Effects import FireEffect
+from src.config.globals import SCREEN, WIDTH
 from math import cos, sin, pi
 import pygame
 
@@ -20,16 +21,16 @@ class Player:
 
     def update(self, dt):
         self.frame = (self.frame+1) % self.frame_module[self.state]
-        self.x = (self.x + self.speed) % 1080
+        self.x = (self.x + self.speed) % WIDTH
 
     def update_state(self, new_state):
         self.frame = 0
         self.state = new_state
 
-    def draw(self, screen):
-        self.HUD.draw(screen)
-        screen.blit(self.animations[self.state][self.frame], (self.x, self.y))
-        self.effect.draw(screen, [self.x+100, self.y])
+    def draw(self):
+        # self.HUD.draw(SCREEN)
+        SCREEN.blit(self.animations[self.state][self.frame], (self.x, self.y))
+        self.effect.draw(SCREEN, [self.x+100, self.y])
 
 
 class Car:
@@ -88,9 +89,9 @@ class Car:
         self.y += self.linear_speed*cos(self.angle)*dt
         self.update_image()
 
-    def draw(self, screen):
-        # pygame.draw.circle(screen, (22, 200, 250), self.center, self.radius, 15)
-        screen.blit(self.image, self.rect)
+    def draw(self):
+        # pygame.draw.circle(SCREEN, (22, 200, 250), self.center, self.radius, 15)
+        SCREEN.blit(self.image, self.rect)
 
     def update_image(self):
         # offset from pivot to center
@@ -117,8 +118,8 @@ class Bullet:
         self.center[0] += self.speed_x*dt
         self.center[1] += self.speed_y*dt
 
-    def draw(self, screen):
-        pygame.draw.circle(screen, (0, 0, 0), self.center, self.size, 5)
+    def draw(self):
+        pygame.draw.circle(SCREEN, (0, 0, 0), self.center, self.size, 5)
 
 
 class BaseGun:
@@ -138,9 +139,9 @@ class BaseGun:
         self.x_end, self.y_end = self.center[0] + sin(self.angle)*self.size, self.center[1] + self.size*cos(self.angle)
         [bullet.update(dt) for bullet in self.bullets]
 
-    def draw(self, screen):
-        pygame.draw.line(screen, (0, 0, 0), self.center, (self.x_end, self.y_end), 6)
-        [bullet.draw(screen) for bullet in self.bullets]
+    def draw(self):
+        pygame.draw.line(SCREEN, (0, 0, 0), self.center, (self.x_end, self.y_end), 6)
+        [bullet.draw(SCREEN) for bullet in self.bullets]
 
 
 class CarPlayer(Player):
@@ -157,7 +158,7 @@ class CarPlayer(Player):
     def shoot(self):
         self.gun.shoot(self.car.angle)
 
-    def draw(self, screen):
-        self.car.draw(screen)
-        self.gun.draw(screen)
-        # self.weapon.draw(screen)
+    def draw(self):
+        self.car.draw()
+        self.gun.draw()
+        # self.weapon.draw(SCREEN)

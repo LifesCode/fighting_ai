@@ -1,4 +1,0 @@
-class HUDActions:
-
-
-    pass

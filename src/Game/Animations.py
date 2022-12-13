@@ -1,7 +1,5 @@
 import pygame
 
-SCREEN = pygame.display.set_mode((1080, 720))
-
 
 def load_animation(name, frames):
     animation = []

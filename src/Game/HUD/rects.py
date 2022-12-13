@@ -1,18 +1,15 @@
+from src.config.globals import BORDER_RADIUS, SCREEN, WIDTH
 import pygame
 
 # Method to draw the life rect
 
-BORDER_RADIUS = 8
-
 
 class Rects:
-    def __init__(self, screen, rect_type, max_value, height, x, y, color, screen_sizes, bar_position):
-        self.screen = screen
+    def __init__(self, rect_type, max_value, height, x, y, color, bar_position):
         self.color = color
         self.height = height
         self.rect_type = rect_type
         self.max_value = max_value
-        self.screen_sizes = screen_sizes
         self.bar_position = bar_position
         self.x = x
         self.y = y
@@ -23,8 +20,8 @@ class Rects:
         ]
         self.rects_display_sizes = {
             "right": {
-                "container": lambda max_value : self.screen_sizes[0]-self.x-max_value,
-                "content": lambda width: (self.screen_sizes[0]-self.x)-width
+                "container": lambda max_value : WIDTH-self.x-max_value,
+                "content": lambda width: (WIDTH-self.x)-width
             },
             "left": {
                 "container": lambda max_value : self.x,
@@ -38,7 +35,7 @@ class Rects:
         current_bar_value = current_bar_value * 4 if self.rect_type == "life" else current_bar_value * 2.5
         
         pygame.draw.rect(
-            surface=self.screen, 
+            surface=SCREEN, 
             color=self.bar_colors[color_index],
             rect=(
                 self.rects_display_sizes[self.bar_position]["content"](current_bar_value),
@@ -50,7 +47,7 @@ class Rects:
         )
 
         pygame.draw.rect(
-            surface=self.screen, 
+            surface=SCREEN, 
             color=self.bar_colors[-1],
             rect=(
                 self.rects_display_sizes[self.bar_position]["container"](max_value),

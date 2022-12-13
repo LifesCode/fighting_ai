@@ -1,11 +1,7 @@
 from src.Game.HUD.rects import Rects
-from src.Game.HUD.hud_actions import HUDActions
+from src.config.globals import MAX_ENERGY, MAX_LIFE, BARS_POSITIONS, SCREEN
 import math
 
-MAX_LIFE = 100
-MAX_ENERGY = 100
-CONTAINERS_POSITIONS = {"Player 1": {
-    "x": 40, "y": 40}, "Player 2": {"x": 40, "y": 40}}
 
 
 class HUD:
@@ -13,21 +9,18 @@ class HUD:
     life = MAX_LIFE
     energy = MAX_ENERGY
     
-    def __init__(self, player_name, screen, screen_sizes):
+    def __init__(self, player_name):
         self.player_name = player_name  # information if it is player one or player 2
-        self.screen = screen
         self.bar_position = "right" if self.player_name == "Player 1" else "left"
         self.bar_containers = {
             "life": {
                 "rect": Rects(
-                    screen=self.screen, 
                     rect_type="life",  
                     max_value=MAX_LIFE,
                     height=26, 
-                    x=CONTAINERS_POSITIONS[self.player_name]["x"],
-                    y=CONTAINERS_POSITIONS[self.player_name]["y"], 
+                    x=BARS_POSITIONS["x"],
+                    y=BARS_POSITIONS["y"], 
                     color=(0, 255, 0), 
-                    screen_sizes=screen_sizes, 
                     bar_position=self.bar_position
                 ),
                 "max": MAX_LIFE,
@@ -35,14 +28,12 @@ class HUD:
             },
             "energy": {
                 "rect": Rects(
-                    screen=self.screen, 
                     rect_type="energy", 
                     max_value=MAX_ENERGY,
                     height=18, 
-                    x=CONTAINERS_POSITIONS[self.player_name]["x"],
-                    y=CONTAINERS_POSITIONS[self.player_name]["y"]+30, 
+                    x=BARS_POSITIONS["x"],
+                    y=BARS_POSITIONS["y"]+30, 
                     color=(0, 255, 0), 
-                    screen_sizes=screen_sizes, 
                     bar_position=self.bar_position
                 ),
                 "max": MAX_ENERGY,
