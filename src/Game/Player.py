@@ -1,6 +1,6 @@
 from src.Game.Animations import player_animations
 from src.Game.Effects import FireEffect
-from src.config.globals import SCREEN, WIDTH
+from src.config.globals import MAP_SURFACE, WIDTH
 from math import cos, sin, pi
 import pygame
 
@@ -28,9 +28,9 @@ class Player:
         self.state = new_state
 
     def draw(self):
-        # self.HUD.draw(SCREEN)
-        SCREEN.blit(self.animations[self.state][self.frame], (self.x, self.y))
-        self.effect.draw(SCREEN, [self.x+100, self.y])
+        # self.HUD.draw(MAP_SURFACE)
+        MAP_SURFACE.blit(self.animations[self.state][self.frame], (self.x, self.y))
+        self.effect.draw(MAP_SURFACE, [self.x+100, self.y])
 
 
 class Car:
@@ -90,8 +90,8 @@ class Car:
         self.update_image()
 
     def draw(self):
-        # pygame.draw.circle(SCREEN, (22, 200, 250), self.center, self.radius, 15)
-        SCREEN.blit(self.image, self.rect)
+        # pygame.draw.circle(MAP_SURFACE, (22, 200, 250), self.center, self.radius, 15)
+        MAP_SURFACE.blit(self.image, self.rect)
 
     def update_image(self):
         # offset from pivot to center
@@ -119,7 +119,7 @@ class Bullet:
         self.center[1] += self.speed_y*dt
 
     def draw(self):
-        pygame.draw.circle(SCREEN, (255, 255, 0), self.center, self.size)
+        pygame.draw.circle(MAP_SURFACE, (255, 255, 0), self.center, self.size)
 
 
 class BaseGun:
@@ -140,7 +140,7 @@ class BaseGun:
         [bullet.update(dt) for bullet in self.bullets]
 
     def draw(self):
-        pygame.draw.line(SCREEN, (0, 0, 0), self.center, (self.x_end, self.y_end), 2)
+        pygame.draw.line(MAP_SURFACE, (0, 0, 0), self.center, (self.x_end, self.y_end), 2)
         [bullet.draw() for bullet in self.bullets]
 
 
@@ -161,4 +161,4 @@ class CarPlayer(Player):
     def draw(self):
         self.car.draw()
         self.gun.draw()
-        # self.weapon.draw(SCREEN)
+        # self.weapon.draw(MAP_SURFACE)

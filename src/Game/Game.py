@@ -1,7 +1,8 @@
 import random
 from src.Game.HUD.HUD import HUD
 from src.Game.Player import CarPlayer
-from src.config.globals import SCREEN, CLOCK
+from src.Game.environment.environment import Environment
+from src.config.globals import SCREEN, CLOCK, MAP_SURFACE, MAP_SURFACE_POS
 import pygame
 
 
@@ -11,6 +12,7 @@ class Game:
         rand = random.choice([1, 0])   # alternate between player 1 and 2
         self.hud_1 = HUD("Player 2")
         self.hud_2 = HUD("Player 1")
+        self.envirnment = Environment()
         self.player_1 = CarPlayer(AIs[0], rand)
         # self.player_2 = Player(AIs[1], 1-rand)
         self.dt = 0
@@ -20,6 +22,8 @@ class Game:
 
     def draw_background(self):
         SCREEN.fill((25, 25, 25))
+        SCREEN.blit(MAP_SURFACE, (MAP_SURFACE_POS))
+        MAP_SURFACE.fill((0, 0, 0))
 
     def draw_hud(self):
         pass
@@ -52,6 +56,7 @@ class Game:
         self.player_1.draw()
         self.hud_1.draw()
         self.hud_2.draw()
+        self.envirnment.draw()
         # self.player_2.draw(SCREEN)
         pygame.display.update()
 
