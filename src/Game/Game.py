@@ -9,11 +9,12 @@ import pygame
 
 class Game:
     def __init__(self, AIs): 
+        rand = [1, 0]
         self.hud_1 = HUD("Player 2")
         self.hud_2 = HUD("Player 1")
-        self.player = Player()
+        # self.player = Player()
         self.envirnment = Environment()
-        # self.player_1 = CarPlayer(AIs[0], rand)
+        self.player_1 = CarPlayer(AIs[0], rand)
         # self.player_2 = Player(AIs[1], 1-rand)
         self.dt = 0
 
@@ -53,8 +54,8 @@ class Game:
 
     def refresh(self):
         self.draw_background()
-        # self.player_1.draw()
-        self.player.draw()
+        self.player_1.draw()
+        # self.player.draw()
         self.hud_1.draw()
         self.hud_2.draw()
         self.envirnment.draw()
@@ -66,9 +67,9 @@ class Game:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     exit()
-                # self.input(event)
-                self.player.controller_player_moves(event=event)
+                self.input(event)
+                # self.player.controller_player_moves(event=event)
 
-            # self.player_1.update(self.dt)
+            self.player_1.update(self.dt)
             self.refresh()
             self.dt = CLOCK.tick()/1000
