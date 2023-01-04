@@ -1,49 +1,21 @@
-from src.config.globals import BORDER_RADIUS, MAP_SURFACE, MAP_SURFACE_SIZE, MAP_SURFACE_POS, MAP_METER, ENTITIES, SCREEN
-from src.Game.environment.wall import Wall
+from src.config.globals import BORDER_RADIUS, MAP_SURFACE, MAP_SURFACE_SIZE,\
+    MAP_SURFACE_POS, MAP_METER, ENTITIES, SCREEN, MIN_WALL_NUMBER, MAX_WALL_NUMBER
+from src.Game.environment.Entities.wall import Wall
 import pygame
+from random import randint
 
 
 class Environment:
 
     def __init__(self):
         self.border_display_adjust = 3
-        self.map_list: list
-        self.make_map_list()
-        # self.show_map()
+        self.map_list = []
 
         self.environment_objects = {
             "0": lambda pos_x, pos_y: None,
             "1": self.draw_block
         }
-        [ENTITIES.append(Wall()) for _ in range(5)]
-
-    def make_map_list(self):
-        self.map_list = []
-
-    def draw_map(self):
-        x = 0
-        y = 0
-        for row in self.map_list:
-            for colum in row:
-                self.environment_objects[colum](x, y)
-                # pygame.draw.rect(
-                #     surface=MAP_SURFACE,
-                #     color=(255, 255, 255),
-                #     rect=(
-                #         x,
-                #         y,
-                #         MAP_METER,
-                #         MAP_METER
-                #     ),
-                #     width=2
-                # )
-                x += MAP_METER
-            x = 0
-            y += MAP_METER
-
-    # def show_map(self):
-    #     for line in self.map_list:
-    #         print(line)
+        [ENTITIES.append(Wall()) for _ in range(randint(MIN_WALL_NUMBER, MAX_WALL_NUMBER))]
 
     def draw(self):
         pygame.draw.rect(
@@ -58,7 +30,6 @@ class Environment:
             width=6,
             border_radius=BORDER_RADIUS + 6
         )
-        self.draw_map()
         [entity.draw() for entity in ENTITIES]
 
     def draw_block(self, pos_x, pos_y):

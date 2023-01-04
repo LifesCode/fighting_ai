@@ -1,11 +1,10 @@
 from src.Game.HUD.rects import Rects
-from src.config.globals import MAX_ENERGY, MAX_LIFE, BARS_POSITIONS, SCREEN
+from src.config.car import MAX_ENERGY, MAX_LIFE
+from src.config.globals import BARS_POSITIONS
 import math
 
 
-
 class HUD:
-    
     life = MAX_LIFE
     energy = MAX_ENERGY
     
@@ -41,10 +40,10 @@ class HUD:
             }
         }   
         self.hud_actions = {
-            "damage": lambda percentage : self.life - MAX_LIFE * percentage if (self.life >= MAX_LIFE * percentage) else 0,
-            "heal": lambda percentage : self.life + MAX_LIFE * percentage if (self.life + MAX_LIFE * percentage <= MAX_LIFE) else MAX_LIFE,
-            "add": lambda percentage : self.energy + MAX_ENERGY * percentage if (self.energy + MAX_ENERGY * percentage <= MAX_ENERGY) else MAX_ENERGY,
-            "remove": lambda percentage : self.energy - MAX_ENERGY * percentage if (self.energy >= MAX_ENERGY * percentage) else 0
+            "damage": lambda percentage: self.life - MAX_LIFE * percentage if (self.life >= MAX_LIFE * percentage) else 0,
+            "heal": lambda percentage: self.life + MAX_LIFE * percentage if (self.life + MAX_LIFE * percentage <= MAX_LIFE) else MAX_LIFE,
+            "add": lambda percentage: self.energy + MAX_ENERGY * percentage if (self.energy + MAX_ENERGY * percentage <= MAX_ENERGY) else MAX_ENERGY,
+            "remove": lambda percentage: self.energy - MAX_ENERGY * percentage if (self.energy >= MAX_ENERGY * percentage) else 0
         }     
 
     def execute_life_actions(self, action: str, percentage: float) -> None:

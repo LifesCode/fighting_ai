@@ -1,21 +1,15 @@
-import random
-from src.Game.HUD.HUD import HUD
-from src.Game.Player import CarPlayer
-from src.Game.player_1 import Player
+from src.Game.Player.Car_Player import CarPlayer
 from src.Game.environment.environment import Environment
-from src.config.globals import SCREEN, CLOCK, MAP_SURFACE, MAP_SURFACE_POS
+from src.config.globals import SCREEN, CLOCK, MAP_SURFACE, MAP_SURFACE_POS, FPS, ENTITIES
+from src.Game.Player.Effects import EFFECTS
 import pygame
 
 
 class Game:
-    def __init__(self, AIs): 
-        rand = [1, 0]
-        self.hud_1 = HUD("Player 2")
-        self.hud_2 = HUD("Player 1")
-        # self.player = Player()
-        self.envirnment = Environment()
-        self.player_1 = CarPlayer(AIs[0], rand)
-        # self.player_2 = Player(AIs[1], 1-rand)
+    def __init__(self, AIs):
+        self.environment = Environment()
+        self.player_1 = CarPlayer(AIs[0], "Player 1")
+        self.player_2 = CarPlayer(AIs[1], "Player 2")
         self.dt = 0
 
     def start(self):
@@ -23,11 +17,8 @@ class Game:
 
     def draw_background(self):
         SCREEN.fill((25, 25, 25))
-        SCREEN.blit(MAP_SURFACE, (MAP_SURFACE_POS))
+        SCREEN.blit(MAP_SURFACE, MAP_SURFACE_POS)
         MAP_SURFACE.fill((100, 100, 100))
-
-    def draw_hud(self):
-        pass
 
     def input(self, event):
         if event.type == pygame.KEYDOWN:
@@ -54,22 +45,33 @@ class Game:
 
     def refresh(self):
         self.draw_background()
+        self.environment.draw()
         self.player_1.draw()
-        # self.player.draw()
-        self.hud_1.draw()
-        self.hud_2.draw()
-        self.envirnment.draw()
-        # self.player_2.draw(SCREEN)
+        self.player_2.draw()
         pygame.display.update()
 
+    def apply_effects(self):
+        for entity in ENTITIES:
+            EFFECTS[entity.get_effect(self.player_1)](self.player_1, self.player_2, entity)  # verify effects on player1
+            EFFECTS[entity.get_effect(self.player_2)](self.player_2, self.player_1, entity)  # verify effects on player2
+
+    def quit_game(self):
+        print("Game Over")
+        # 1-> create a summary/overview of each player
+        # 2-> save the info
+        pygame.quit()
+        exit()
+
     def game_loop(self):
-        while True:
+        while True:  # self.player_1.is_alive() and self.player_2.is_alive():
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    exit()
+                    self.quit_game()
                 self.input(event)
-                # self.player.controller_player_moves(event=event)
 
             self.player_1.update(self.dt)
+            self.player_2.update(self.dt)
+            self.apply_effects()  # interactions between players and environment
             self.refresh()
-            self.dt = CLOCK.tick()/1000
+            self.dt = CLOCK.tick(FPS)/1000
+        self.quit_game()
